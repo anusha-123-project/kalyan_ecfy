@@ -1,14 +1,12 @@
 <?php
 
 namespace App\Models;
-
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Categories extends Model
+class Category extends Model
 {
-    //
-     use HasFactory;
+    use HasFactory;
 
     protected $fillable = [
         'admin_id',
@@ -20,7 +18,7 @@ class Categories extends Model
         'priority',
         'module_id',
         'slug',
-        'featured',
+        'featured'
     ];
 
     // You can add relationships here, if needed, such as a parent-child relationship

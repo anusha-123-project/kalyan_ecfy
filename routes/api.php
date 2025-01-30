@@ -45,6 +45,9 @@ Route::prefix('admin')->group(function () {
     // Route::get('/products', [ProductController::class, 'index']); 
     Route::post('/products', [ProductController::class, 'store'])->middleware('auth:sanctum');
     Route::get('/get-products', [ProductController::class, 'getProducts'])->middleware('auth:sanctum');
+    Route::post('/delete-products/{id}',[ProductController::class,'deleteProducts'])->middleware('auth:sanctum');
+    Route::put('/update-products/{id}',[ProductController::class,'updateProduct'])->middleware('auth:sanctum');
+
     // Route::get('/products/{id}', [ProductController::class, 'show']);
     // Route::put('/products/{id}', [ProductController::class, 'update']);
     // Route::delete('/products/{id}', [ProductController::class, 'destroy']);
@@ -52,7 +55,9 @@ Route::prefix('admin')->group(function () {
 
     // category 
     Route::get('/categories', [CategoryController::class, 'index']);
-    Route::post('/category', [CategoryController::class, 'store']);
+    Route::post('/store-category', [CategoryController::class, 'store'])->middleware('auth:sanctum');
+    Route::put('/category-update/{id}', [CategoryController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('/category-delete/{id}', [CategoryController::class, 'delete'])->middleware('auth:sanctum');
     // purchasing 
     Route::post('purchases',[PurchasingController::class, 'store']);
 

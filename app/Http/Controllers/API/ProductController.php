@@ -61,21 +61,18 @@ class ProductController extends Controller
     public function store(Request $request)
 {
     $data=$request->json()->all();
-    // return response()->json(['msg'=>"working file"]);
+   
     $adminId= Auth::user()->id;
     Product::create([
         'admin_id'=>$adminId,'category_id'=>$data['category_id'],'name'=>$data['name'],'quantity'=>$data['quantity'],'qty_type'=>$data['qty_type'],'description'=>$data['description'],'price'=>$data['price'],'image'=>$data['image']
     ]);
-    // return response()->json($data);
     return response()->json([
         'message' => 'Product created successfully',
         'data' => $data,
     ], 201);
 }
 
-
-
-    public function show($id)
+public function show($id)
     {
         $product = Product::find($id);
 
@@ -155,6 +152,31 @@ public function getProducts(Request $request)
         'message' => 'Products are',
         'products' => $products
     ], 200);
+}
+public function updateProduct(Request $request,$id)
+{
+    $data=$request->json()->all();
+        $adminId= Auth::user()->id;
+        Product::where('id',$id)->where('admin_id', $adminId)->update([
+          'admin_id'=>$adminId,'category_id'=>$data['category_id'],'name'=>$data['name'],'quantity'=>$data['quantity'],'qty_type'=>$data['qty_type'],'description'=>$data['description'],'price'=>$data['price'],'image'=>$data['image']
+    ]);
+         return response()->json([
+            'message' => 'Product updated successfully',
+            'data' => $data,
+        ], 201);
+}
+
+public function deleteProducts(Request $request,$id)
+{
+    $data = $request->json()->all();
+    $userId = Auth::id(); 
+    $product = Product::where('id', $id)->where('admin_id', $userId)->first();
+    if (!$product) {
+        return response()->json(['message' => 'Product not found or unauthorized'], 404);
+    }
+   $product->delete();
+
+    return response()->json(['message' => 'Product deleted successfully']);
 }
 
 }
